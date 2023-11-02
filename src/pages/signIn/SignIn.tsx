@@ -4,15 +4,15 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
-import { useAuth } from "@/server/useAuth";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { signIn } from "@/server/auth";
 
 export const SignIn = () => {
 	const navegate = useNavigate();
-	const { signIn } = useAuth();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [passwordType, setPasswordType] = useState<"password" | "text">("password");
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setLoading(true);
@@ -57,14 +57,27 @@ export const SignIn = () => {
 					</div>
 					<div className="w-full">
 						<Label htmlFor="password">Password</Label>
-						<Input
-							id="password"
-							type="password"
-							placeholder="Enter your password"
-							required
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
+						<div className="relative">
+							<Input
+								id="password"
+								type={passwordType}
+								placeholder="Enter your password"
+								required
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							{passwordType === "password" ? (
+								<Eye
+									className="absolute right-2 top-2 text-zinc-500 dark:text-zinc-400 cursor-pointer"
+									onClick={() => setPasswordType("text")}
+								/>
+							) : (
+								<EyeOff
+									className="absolute right-2 top-2 text-zinc-500 dark:text-zinc-400 cursor-pointer"
+									onClick={() => setPasswordType("password")}
+								/>
+							)}
+						</div>
 					</div>
 					<Button
 						variant="brand"

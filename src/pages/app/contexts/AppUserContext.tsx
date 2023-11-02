@@ -1,5 +1,5 @@
-import { toast } from "@/components/ui/use-toast";
-import { getUsers } from "@/server/users";
+import { useToken } from "@/hooks/useToken";
+import { getSectors, getUsers } from "@/server/users";
 import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,28 +12,35 @@ type User = {
 
 type AppUserContextType = {
 	user: User | null | "loading";
+	sectors: { id: string; name: string }[];
 };
 
 const AppUserContext = createContext({} as AppUserContextType);
 export const AppUserProvider = ({ children }: { children: ReactNode }) => {
 	const navegate = useNavigate();
+	const getToken = useToken();
 	const [user, setUser] = useState<User | null | "loading">("loading");
+	const [sectors, setSectors] = useState([]);
 	useEffect(() => {
+		const token = getToken();
+		if (!token) return;
 		(async () => {
-			const { success, data } = await getUsers();
-			if (!success) {
-				toast({ title: "Expired session, please login again" });
-				navegate("/signin");
-				return;
+			const { success, data } = await getUsers(token);
+			if (success) {
+				setUser(data);
+				if (!data) navegate("/app/first-login", { replace: true });
 			}
-			if (!data) {
-				navegate("/app/first-login", { replace: true });
-				return;
-			}
-			setUser(data);
+		})();
+		(async () => {
+			const { success, data } = await getSectors(token);
+			if (success) setSectors(data);
 		})();
 	}, []);
-	return <AppUserContext.Provider value={{ user }}>{children}</AppUserContext.Provider>;
+	return (
+		<AppUserContext.Provider value={{ user, sectors }}>
+			{children}
+		</AppUserContext.Provider>
+	);
 };
 
 export const useAppUser = () => {
