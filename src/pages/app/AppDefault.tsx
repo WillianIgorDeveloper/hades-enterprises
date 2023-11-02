@@ -1,7 +1,9 @@
+import { Container } from "@/components/Container";
+
 export const AppDefault = () => {
 	return (
-		<div>
+		<Container className="p-3">
 			<h1>App Default</h1>
-		</div>
+		</Container>
 	);
 };

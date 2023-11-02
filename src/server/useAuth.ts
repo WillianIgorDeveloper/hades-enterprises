@@ -1,24 +1,21 @@
+import { toast } from "@/components/ui/use-toast";
 import axios from "axios";
 const url = import.meta.env.VITE_AUTH_URL;
 
 export const useAuth = () => {
 	const errorHandler = (error: any) => {
 		console.log(error);
-		return {
-			success: false,
-			serverError: true,
-			message: "Internal server error",
-		};
+		toast({ title: "Internal server error", variant: "destructive" });
+		return { success: false };
 	};
 	const signUp = async (email: string, password: string) => {
 		try {
-			const { data } = await axios.post(`${url}/signup`, { email, password });
-			if (data.success) localStorage.setItem("token", data.token);
-			return {
-				success: data.success,
-				message: data.message,
-				serverError: false,
-			};
+			const {
+				data: { success, message, token },
+			} = await axios.post(`${url}/signup`, { email, password });
+			if (success) localStorage.setItem("token", token);
+			else toast({ title: message });
+			return { success };
 		} catch (error) {
 			return errorHandler(error);
 		}
@@ -26,27 +23,24 @@ export const useAuth = () => {
 	const verifyToken = async () => {
 		try {
 			const token = localStorage.getItem("token");
-			if (!token) return { success: false, message: "Missing token" };
-			const { data } = await axios.get(`${url}/verifyToken/${token}`);
-			if (!data.success) localStorage.removeItem("token");
-			return {
-				success: data.success,
-				message: data.message,
-				serverError: false,
-			};
+			if (!token) return { success: false };
+			const {
+				data: { success },
+			} = await axios.get(`${url}/verifyToken/${token}`);
+			if (!success) localStorage.removeItem("token");
+			return { success };
 		} catch (error) {
 			return errorHandler(error);
 		}
 	};
 	const signIn = async (email: string, password: string) => {
 		try {
-			const { data } = await axios.get(`${url}/signin/${email}/${password}`);
-			if (data.success) localStorage.setItem("token", data.token);
-			return {
-				success: data.success,
-				message: data.message,
-				serverError: false,
-			};
+			const {
+				data: { success, message, token },
+			} = await axios.get(`${url}/signin/${email}/${password}`);
+			if (success) localStorage.setItem("token", token);
+			else toast({ title: message });
+			return { success };
 		} catch (error) {
 			return errorHandler(error);
 		}
