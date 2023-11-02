@@ -1,3 +1,4 @@
+import { Container } from "@/components/Container";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { ChevronsRight } from "lucide-react";
@@ -7,13 +8,13 @@ export const Home = () => {
 	return (
 		<>
 			<header className="fixed w-full">
-				<div className="container mx-auto p-3 flex items-center justify-between lg:p-5">
+				<Container className="p-3 flex items-center justify-between lg:p-5">
 					<h1 className="text-xl font-bold">Hades Enterprises</h1>
 					<ThemeToggle />
-				</div>
+				</Container>
 			</header>
 			<main>
-				<section className="text-center p-5 h-screen flex flex-col items-center justify-center gap-3 container max-w-sm md:flex-row-reverse md:text-left md:max-w-none md:gap-5 md:h-[80vh] lg:gap-8 xl:gap-28">
+				<Container className="text-center p-5 h-screen flex flex-col items-center justify-center gap-3 max-w-sm md:flex-row-reverse md:text-left md:max-w-none md:gap-5 md:h-[80vh] lg:gap-8 xl:gap-28">
 					<img src="/icon.png" alt="Atlas" className="md:max-w-xs" />
 					<div className="space-y-3 md:max-w-xs lg:max-w-md xl:max-w-lg">
 						<h2 className="text-3xl p-1 font-black bg-brand-gradient text-transparent bg-clip-text lg:text-4xl xl:text-5xl">
@@ -24,7 +25,7 @@ export const Home = () => {
 							automate tasks, we have you covered.
 						</p>
 						<div className="space-x-3 pt-1">
-							<Link to="/signin">
+							<Link to="/app">
 								<Button
 									variant="brand"
 									className="hover:scale-105 transition-transform duration-200 ease-in-out"
@@ -39,7 +40,7 @@ export const Home = () => {
 							</Link>
 						</div>
 					</div>
-				</section>
+				</Container>
 			</main>
 		</>
 	);
