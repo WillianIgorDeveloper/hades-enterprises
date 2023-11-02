@@ -5,11 +5,11 @@ import { GlobalLoader } from "@/components/GlobalLoader";
 import { useEffect, useState } from "react";
 
 export const App = () => {
-	const { user } = useAppUser();
+	const { dataLoading } = useAppUser();
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
-		if (user !== "loading") setLoading(false);
-	}, [user]);
+		if (!dataLoading) setLoading(false);
+	}, [dataLoading]);
 	if (loading) return <GlobalLoader />;
 	else
 		return (

@@ -21,14 +21,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createProfile } from "@/server/users";
 import { useToken } from "@/hooks/useToken";
 
 export const FirstLogin = () => {
 	// -------- Hooks ---------
 	const navegate = useNavigate();
 	const getToken = useToken();
-	const { user, sectors } = useAppUser();
+	const { dataLoading, user, sectors, handleCreateProfile } = useAppUser();
 	// -------- States ---------
 	const [loading, setLoading] = useState(true);
 	const [nickname, setNickname] = useState("");
@@ -41,7 +40,7 @@ export const FirstLogin = () => {
 		setLoading(true);
 		const token = getToken();
 		if (!token) return setLoading(false);
-		const { success } = await createProfile(
+		const { success } = await handleCreateProfile(
 			token,
 			nickname,
 			sectorId,
@@ -54,20 +53,20 @@ export const FirstLogin = () => {
 	// -------- Effects ---------
 	useEffect(() => {
 		(async () => {
-			if (user === "loading") return;
-			else if (!user) return setLoading(false);
+			if (dataLoading) return;
+			if (!user) return setLoading(false);
 			else {
 				navegate("/app", { replace: true });
 				setLoading(false);
 				return;
 			}
 		})();
-	}, [user]);
+	}, [dataLoading]);
 	if (loading) return <GlobalLoader />;
 	else
 		return (
-			<div className="fixed z-40 w-full h-full top-0 left-0 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
-				<Card>
+			<div className="fixed z-40 w-full h-full top-0 left-0 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center p-3">
+				<Card className="w-full min-w-[320px] max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
 					<CardHeader className="text-center">
 						<CardTitle>Welcome!</CardTitle>
 						<CardDescription>
