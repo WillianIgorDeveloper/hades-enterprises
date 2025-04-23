@@ -1,0 +1,10 @@
+{
+	"name": "HadesEnterprises",
+	"theme_color": "#000000",
+	"background_color": "#000000",
+	"short_name": "hades",
+	"id": "hadesenterprises",
+	"description": "Hades Enterprises",
+	"display_override": ["browser", "fullscreen", "window-controls-overlay"],
+	"categories": ["business"]
+}
