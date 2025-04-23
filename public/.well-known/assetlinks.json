@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.netlify.hades_greekprojects.twa",
+        "sha256_cert_fingerprints": ["7A:3D:2D:19:01:5A:4C:10:13:E9:CC:B5:F7:A8:6F:E5:92:E2:95:14:62:6D:7A:62:46:13:5E:0F:13:7A:5B:83"]
+      }
+    }]
