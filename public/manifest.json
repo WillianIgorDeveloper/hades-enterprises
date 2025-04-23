@@ -1,4 +1,5 @@
 {
+	"start_url": "/",
 	"name": "HadesEnterprises",
 	"theme_color": "#000000",
 	"background_color": "#000000",
@@ -6,5 +7,22 @@
 	"id": "hadesenterprises",
 	"description": "Hades Enterprises",
 	"display_override": ["browser", "fullscreen", "window-controls-overlay"],
-	"categories": ["business"]
+	"categories": ["business"],
+	"icons": [
+		{
+			"src": "icon.png",
+			"sizes": "64x64 32x32 24x24 16x16",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "icon.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "icon.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
 }
